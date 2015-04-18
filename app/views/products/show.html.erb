@@ -7,7 +7,9 @@
 
 <p>
   <strong>Urls:</strong>
-  <%= @product.urls %>
+  <% @product.urls.each do |url| %>
+    <li><a href="<%= url %>" target="_blank"><%= url %></a></li>
+  <% end %>
 </p>
 
 <p>
