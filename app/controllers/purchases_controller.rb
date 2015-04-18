@@ -1,11 +1,11 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :update, :destroy]
-  before_action :set_product, only: [:show, :new, :create]
+  before_action :set_product, only: [:index, :show, :new, :create]
 
   # GET /purchases
   # GET /purchases.json
   def index
-    @purchases = Purchase.all
+    @purchases = @product.purchases
   end
 
   # GET /purchases/1
