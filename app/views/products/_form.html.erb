@@ -16,9 +16,11 @@
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :urls %><br>
-    <%= f.text_area :urls %>
+    <p>Files:</p>
+    <ul id="dropbox-files">
+    </ul>
   </div>
+  <div class="field" id="dropbox-chooser"></div>
   <div class="field">
     <%= f.label :price %><br>
     <%= f.text_field :price %>
@@ -31,3 +33,19 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script>
+  $(function() {
+    var options = {
+      success: function(files) {
+        var fileList = $('#dropbox-files');
+        files.forEach(function(element, index, array) {
+          fileList.append("<li>" + element.link + "<input type='hidden' name='product[urls][]' value='" + element.link + "' /></li>");
+        });
+      },
+      multiselect: true
+    }
+    var button = Dropbox.createChooseButton(options);
+    document.getElementById("dropbox-chooser").appendChild(button);
+  });
+</script>
