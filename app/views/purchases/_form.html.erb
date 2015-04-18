@@ -1,0 +1,33 @@
+<%= form_for([:product, @purchase]) do |f| %>
+  <% if @purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+      <ul>
+      <% @purchase.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <p>You're about to buy <i>"<%= @product.title %>"</i></p>
+  </div>
+  <h2>Payment Info</h2>
+  <div class="field">
+    <label for="cc">Card Number</label><br>
+    <input type="text" name="cc"></input>
+  </div>
+  <div class="field">
+    <label for="cc_expire">Expires (mm/yy)</label><br>
+    <input type="text" name="cc_expire"></input>
+  </div>
+  <div class="field">
+    <label for="cvv">CVV</label><br>
+    <input type="text" name="cvv"></input>
+  </div>
+  <div class="actions">
+    <%= f.submit "Confirm?" %>
+  </div>
+<% end %>

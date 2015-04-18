@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @product.title %>
+</p>
+
+<p>
+  <strong>Download Links:</strong><br>
+  <ul>
+  <% @product.urls.each do |url| %>
+    <li><a href="<%= url %>" target="_blank"><%= url %></a></li>
+  <% end %>
+  </ul>
+</p>

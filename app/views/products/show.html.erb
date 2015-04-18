@@ -20,5 +20,10 @@
   <%= @product.email %>
 </p>
 
+<p>
+  <strong>Purchase Button:</strong>
+  <%= link_to '-= Buy Now =-', new_product_purchase_path(@product) %> (add to your site or email to the client)
+</p>
+
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
