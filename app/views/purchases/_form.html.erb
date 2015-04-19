@@ -1,3 +1,4 @@
+<fieldset>
 <%= form_for([:product, @purchase]) do |f| %>
   <% if @purchase.errors.any? %>
     <div id="error_explanation">
@@ -31,3 +32,4 @@
     <%= f.submit "Confirm?" %>
   </div>
 <% end %>
+</fieldset>

@@ -1,3 +1,4 @@
+<fieldset>
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
     <div id="error_explanation">
@@ -33,6 +34,7 @@
     <%= f.submit %>
   </div>
 <% end %>
+</fieldset>
 
 <script>
   $(function() {
