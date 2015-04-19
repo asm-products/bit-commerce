@@ -6,3 +6,16 @@ section.container {
     @include shift(3);
   }
 }
+
+h1 {
+  color: transparentize(#333, 0.3);
+  font-size: 2.2em;
+  font-weight: 800;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+  font-weight: 800;
+  margin-bottom: 0.5em;
+}
