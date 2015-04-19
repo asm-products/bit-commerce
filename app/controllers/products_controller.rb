@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  skip_before_filter :product_session, only: [:new, :create]
+
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /products
@@ -28,6 +30,9 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
+        # authenticate user to access newly created product
+        session[:auth_token] = @product.auth_token
+
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -64,7 +69,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find_by(token: params[:id])
+      @product = Product.find_by!(token: params[:id], auth_token: session[:auth_token])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

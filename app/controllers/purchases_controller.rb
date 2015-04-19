@@ -1,4 +1,6 @@
 class PurchasesController < ApplicationController
+  skip_before_filter :product_session, only: [:show, :new, :create]
+
   before_action :set_purchase, only: [:show, :update, :destroy]
   before_action :set_product, only: [:index, :show, :new, :create]
 
