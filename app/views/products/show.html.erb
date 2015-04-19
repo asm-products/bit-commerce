@@ -28,6 +28,12 @@
 </p>
 
 <p>
+<strong>Purchases:</strong>
+  You have <%= @product.purchases.count %> product(s) sold.
+  <%= link_to 'Show', product_purchases_path(@product) %>
+</p>
+
+<p>
   <strong>Secret URL:</strong>
   <%= link_to '-= Secret URL =-', "#{product_path(@product)}/?auth_token=#{@product.auth_token}" %> (keep it secret!)
 </p>
