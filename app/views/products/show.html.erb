@@ -27,5 +27,10 @@
   <%= link_to '-= Buy Now =-', new_product_purchase_path(@product) %> (add to your site or email to the client)
 </p>
 
+<p>
+  <strong>Secret URL:</strong>
+  <%= link_to '-= Secret URL =-', "#{product_path(@product)}/?auth_token=#{@product.auth_token}" %> (keep it secret!)
+</p>
+
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
