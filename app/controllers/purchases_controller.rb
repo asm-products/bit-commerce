@@ -65,7 +65,7 @@ class PurchasesController < ApplicationController
     end
 
     def set_product
-      @product = Product.find(params[:product_id])
+      @product = Product.find_by(token: params[:product_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
