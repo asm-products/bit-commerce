@@ -25,7 +25,7 @@ Visit [https://assembly.com](https://assembly.com) to learn more.
 
 2. Visit localhost at port 3000:
 
-    http://localhost:3000
+    http://localhost:3000/products/new
 
 ## Deploy to Heroku
 
