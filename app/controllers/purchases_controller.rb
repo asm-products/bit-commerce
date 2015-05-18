@@ -56,7 +56,7 @@ class PurchasesController < ApplicationController
 
         # Access response
         if @response.success? && @response.payment_exec_status != "ERROR"
-          @response.payKey # TODO: save for future reference
+          @purchase.update_attribute :paypal_pay_key, @response.payKey
           format.html { redirect_to @api.payment_url(@response) } # Url to complete payment
         else
           # TODO: log errors, notify team and show something humman readable
