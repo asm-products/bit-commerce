@@ -87,6 +87,11 @@ GEM
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     normalize-rails (3.0.2)
+    paypal-sdk-adaptivepayments (1.117.0)
+      paypal-sdk-core (~> 0.3.0)
+    paypal-sdk-core (0.3.1)
+      multi_json (~> 1.0)
+      xml-simple
     pg (0.18.1)
     rack (1.6.0)
     rack-test (0.6.3)
@@ -155,6 +160,7 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    xml-simple (1.1.5)
 
 PLATFORMS
   ruby
@@ -168,6 +174,7 @@ DEPENDENCIES
   jquery-rails
   neat
   normalize-rails
+  paypal-sdk-adaptivepayments
   pg
   rails (= 4.2.1)
   rails_12factor

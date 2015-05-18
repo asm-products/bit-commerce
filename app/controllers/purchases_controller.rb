@@ -27,8 +27,42 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-        format.html { redirect_to [@product, @purchase], notice: 'Purchase was successfully created.' }
-        format.json { render :show, status: :created, location: @purchase }
+
+        @api = PayPal::SDK::AdaptivePayments.new
+
+        # Build request object
+        @pay = @api.build_pay({
+          :actionType => "PAY",
+          :cancelUrl => new_product_purchase_url(@product),
+          :currencyCode => "USD",
+          # :feesPayer => "SENDER", # Can't be used if primary receiver is specified!
+          :receiverList => {
+            :receiver => [
+              {
+                :amount => @product.price,
+                :email => 'bitcommerce@bdhr.co', # TODO: move to environment variables
+                :primary => true
+              },
+              {
+                :amount => @product.price - (@product.price * 0.05),
+                :email => @product.email
+              }
+            ] },
+          :returnUrl => product_purchase_url(@product, @purchase)
+        })
+
+        # Make API call & get response
+        @response = @api.pay(@pay)
+
+        # Access response
+        if @response.success? && @response.payment_exec_status != "ERROR"
+          @response.payKey # TODO: save for future reference
+          format.html { redirect_to @api.payment_url(@response) } # Url to complete payment
+        else
+          # TODO: log errors, notify team and show something humman readable
+          # to the user ;)
+          raise @response.error[0].message.to_yaml
+        end
       else
         format.html { render :new }
         format.json { render json: @purchase.errors, status: :unprocessable_entity }
