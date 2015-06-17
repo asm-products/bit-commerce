@@ -109,7 +109,7 @@ class PurchasesController < ApplicationController
     end
 
     def service_fee
-      ENV['BIT_SERVICE_FEE'].to_f || 0.05
+      (ENV['BIT_SERVICE_FEE'] || 0.05).to_f
     end
 
     def business_email
