@@ -35,7 +35,6 @@ class PurchasesController < ApplicationController
           :actionType => "PAY",
           :cancelUrl => new_product_purchase_url(@product),
           :currencyCode => "USD",
-          # :feesPayer => "SENDER", # Can't be used if primary receiver is specified!
           :receiverList => {
             :receiver => [
               {
@@ -109,16 +108,8 @@ class PurchasesController < ApplicationController
       params.require(:purchase).permit(:email)
     end
 
-    def bit_service_fee
-      ENV['BIT_SERVICE_FEE'].to_f || 0.05
-    end
-
-    def paypal_service_fee
-      ENV['PAYPAL_SERVICE_FEE'].to_f || 0.0
-    end
-
     def service_fee
-      bit_service_fee + paypal_service_fee
+      ENV['BIT_SERVICE_FEE'].to_f || 0.05
     end
 
     def business_email
