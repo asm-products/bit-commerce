@@ -5,13 +5,13 @@ test: &default
   client_secret: EO422dn3gQLgDbuwqTjzrFgFtaRLRR5BdHEESmha49TM
 
   # Mode can be 'live' or 'sandbox'
-  mode: sandbox
+  mode: <%= ENV['PAYPAL_MODE'] || 'sandbox' %>
 
   # Credentials for Classic APIs
-  app_id: APP-80W284485P519543T
-  username: jb-us-seller_api1.paypal.com
-  password: WX4WTU3S8MY44S7F
-  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy
+  app_id: <%= ENV['PAYPAL_APP_ID'] || 'APP-80W284485P519543T' %>
+  username: <%= ENV['PAYPAL_USERNAME'] || 'jb-us-seller_api1.paypal.com' %>
+  password: <%= ENV['PAYPAL_PASSWORD'] || 'WX4WTU3S8MY44S7F' %>
+  signature: <%= ENV['PAYPAL_SIGNATURE'] || 'AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy' %>
   # # With Certificate
   # cert_path: "config/cert_key.pem"
   sandbox_email_address: Platform.sdk.seller@gmail.com
