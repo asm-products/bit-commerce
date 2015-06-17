@@ -40,7 +40,7 @@ class PurchasesController < ApplicationController
             :receiver => [
               {
                 :amount => @product.price,
-                :email => 'bitcommerce@bdhr.co', # TODO: move to environment variables
+                :email => business_email,
                 :primary => true
               },
               {
@@ -119,5 +119,10 @@ class PurchasesController < ApplicationController
 
     def service_fee
       bit_service_fee + paypal_service_fee
+    end
+
+    def business_email
+      # defaults to the test, development account
+      ENV['BIT_BUSINESS_EMAIL'] || 'bitcommerce@bdhr.co'
     end
 end
