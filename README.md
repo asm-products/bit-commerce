@@ -32,3 +32,11 @@ Visit [https://assembly.com](https://assembly.com) to learn more.
     git remote add heroku git@heroku.com:bitcommerce.git
     git push heroku master
     heroku run bin/rake db:migrate
+
+## Environment Variables
+
+* `BIT_BUSINESS_EMAIL` - PayPal Business account used to collect payment as a primary account, default is sandbox account
+* `BIT_SERVICE_FEE` - The cost of BitCommerce service, default is 0.05 (5%)
+
+See also `app/config/paypal.yaml` for the environment variables related to the
+PayPal API configuration
