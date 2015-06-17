@@ -44,7 +44,7 @@ class PurchasesController < ApplicationController
                 :primary => true
               },
               {
-                :amount => @product.price - (@product.price * 0.05),
+                :amount => @product.price - (@product.price * service_fee),
                 :email => @product.email
               }
             ] },
@@ -107,5 +107,17 @@ class PurchasesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
       params.require(:purchase).permit(:email)
+    end
+
+    def bit_service_fee
+      ENV['BIT_SERVICE_FEE'].to_f || 0.05
+    end
+
+    def paypal_service_fee
+      ENV['PAYPAL_SERVICE_FEE'].to_f || 0.0
+    end
+
+    def service_fee
+      bit_service_fee + paypal_service_fee
     end
 end
