@@ -4,15 +4,4 @@
 @import "neat";
 
 @import "layout";
-
-#new_purchase {
-  input[type=submit] {
-    background-image: url('https://www.paypalobjects.com/webstatic/en_US/btn/btn_buynow_pp_142x27.png');
-    width: 142px;
-    height: 27px;
-    background-repeat: no-repeat;
-  }
-  .actions {
-    text-align: center;
-  }
-}
+@import "purchases";
