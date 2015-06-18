@@ -2,8 +2,16 @@ section.container {
   @include outer-container;
 
   div.inner-content {
-    @include span-columns(6);
-    @include shift(3);
+    @include span-columns(12);
+    @include media($tablet) {
+      @include span-columns(8);
+      @include shift(2);
+    }
+
+    @include media($desktop) {
+      @include span-columns(6);
+      @include shift(3);
+    }
   }
 }
 
