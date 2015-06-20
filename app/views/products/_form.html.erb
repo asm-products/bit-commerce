@@ -13,22 +13,24 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
   <div class="field" style="min-height:100px;">
-    <strong>Files</strong>
+    <strong>Files</strong>&nbsp;&nbsp;<span id="dropbox-chooser"></span>
     <ul id="dropbox-files">
     </ul>
   </div>
-  <div class="field" id="dropbox-chooser" style="margin-bottom:20px;"></div>
-  <div class="field">
+  <div class="field price">
     <%= f.label :price %>
     <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
   </div>
   <div class="actions">
     <%= f.submit %>
