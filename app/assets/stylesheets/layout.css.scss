@@ -1,7 +1,16 @@
+body {
+  background-color: #161c2e;
+}
+
 section.container {
   @include outer-container;
 
   div.inner-content {
+    background-color: $base-background-color;
+    border: $base-border;
+    margin: 0 0 $small-spacing;
+    padding: $base-spacing;
+
     @include span-columns(12);
     @include media($tablet) {
       @include span-columns(8);

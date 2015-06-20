@@ -1,8 +1,7 @@
 fieldset {
-  background-color: lighten($base-border-color, 10%);
-  border: $base-border;
-  margin: 0 0 $small-spacing;
-  padding: $base-spacing;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 input,
