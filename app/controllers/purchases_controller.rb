@@ -36,7 +36,11 @@ class PurchasesController < ApplicationController
   end
 
   def make_payment(format)
-    _make_adaptive_payment(format)
+    if adaptive_payments?
+      _make_adaptive_payment format
+    else
+      _make_paypal_payment format
+    end
   end
 
   def _make_adaptive_payment(format)
@@ -73,6 +77,49 @@ class PurchasesController < ApplicationController
       # TODO: log errors, notify team and show something humman readable
       # to the user ;)
       raise @response.error[0].message.to_yaml
+    end
+  end
+
+  def _make_paypal_payment(format)
+    @payment = PayPal::SDK::REST::Payment.new({
+      :intent =>  "sale",
+
+      :payer =>  {
+        :payment_method =>  "paypal"
+      },
+
+      :redirect_urls => {
+        :return_url => product_purchase_url(@product, @purchase),
+        :cancel_url => new_product_purchase_url(@product)
+      },
+
+      :transactions =>  [{
+        :item_list => {
+          :items => [{
+            :name => @product.title,
+            :price => sprintf("%.2f" % @product.price),
+            :currency => "USD",
+            :quantity => 1
+          }]
+        },
+
+        :amount =>  {
+          :total =>  sprintf("%.2f" % @product.price),
+          :currency =>  "USD"
+        }
+      }]
+    })
+
+    if @payment.create
+      @purchase.update_attribute :paypal_payment_id, @payment.id
+
+      # Redirect the user to given approval url
+      @redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
+      format.html { redirect_to @redirect_url } # Url to complete payment
+    else
+      # TODO: log errors, notify team and show something humman readable
+      # to the user ;)
+      raise @payment.error.inspect
     end
   end
 
@@ -122,5 +169,9 @@ class PurchasesController < ApplicationController
     def business_email
       # defaults to the test, development account
       ENV['BIT_BUSINESS_EMAIL'] || 'bitcommerce@bdhr.co'
+    end
+
+    def adaptive_payments?
+      ENV['BIT_ADAPTIVE'] == 'true' || false
     end
 end
