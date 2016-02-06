@@ -27,45 +27,52 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-
-        @api = PayPal::SDK::AdaptivePayments.new
-
-        # Build request object
-        @pay = @api.build_pay({
-          :actionType => "PAY",
-          :cancelUrl => new_product_purchase_url(@product),
-          :currencyCode => "USD",
-          :receiverList => {
-            :receiver => [
-              {
-                :amount => @product.price,
-                :email => business_email,
-                :primary => true
-              },
-              {
-                :amount => @product.price - (@product.price * service_fee),
-                :email => @product.email
-              }
-            ] },
-          :returnUrl => product_purchase_url(@product, @purchase)
-        })
-
-        # Make API call & get response
-        @response = @api.pay(@pay)
-
-        # Access response
-        if @response.success? && @response.payment_exec_status != "ERROR"
-          @purchase.update_attribute :paypal_pay_key, @response.payKey
-          format.html { redirect_to @api.payment_url(@response) } # Url to complete payment
-        else
-          # TODO: log errors, notify team and show something humman readable
-          # to the user ;)
-          raise @response.error[0].message.to_yaml
-        end
+        make_payment(format)
       else
         format.html { render :new }
         format.json { render json: @purchase.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def make_payment(format)
+    _make_adaptive_payment(format)
+  end
+
+  def _make_adaptive_payment(format)
+    @api = PayPal::SDK::AdaptivePayments.new
+
+    # Build request object
+    @pay = @api.build_pay({
+      :actionType => "PAY",
+      :cancelUrl => new_product_purchase_url(@product),
+      :currencyCode => "USD",
+      :receiverList => {
+        :receiver => [
+          {
+            :amount => @product.price,
+            :email => business_email,
+            :primary => true
+          },
+          {
+            :amount => @product.price - (@product.price * service_fee),
+            :email => @product.email
+          }
+        ] },
+        :returnUrl => product_purchase_url(@product, @purchase)
+    })
+
+    # Make API call & get response
+    @response = @api.pay(@pay)
+
+    # Access response
+    if @response.success? && @response.payment_exec_status != "ERROR"
+      @purchase.update_attribute :paypal_pay_key, @response.payKey
+      format.html { redirect_to @api.payment_url(@response) } # Url to complete payment
+    else
+      # TODO: log errors, notify team and show something humman readable
+      # to the user ;)
+      raise @response.error[0].message.to_yaml
     end
   end
 
