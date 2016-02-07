@@ -1,8 +1,8 @@
 test: &default
 
   # Credentials for REST APIs
-  client_id: EBWKjlELKMYqRNQ6sYvFo64FtaRLRR5BdHEESmha49TM
-  client_secret: EO422dn3gQLgDbuwqTjzrFgFtaRLRR5BdHEESmha49TM
+  client_id: <%= ENV['PAYPAL_CLIENT_ID'] || 'EBWKjlELKMYqRNQ6sYvFo64FtaRLRR5BdHEESmha49TM' %>
+  client_secret: <%= ENV['PAYPAL_SECRET'] || 'EO422dn3gQLgDbuwqTjzrFgFtaRLRR5BdHEESmha49TM' %>
 
   # Mode can be 'live' or 'sandbox'
   mode: <%= ENV['PAYPAL_MODE'] || 'sandbox' %>
@@ -14,7 +14,7 @@ test: &default
   signature: <%= ENV['PAYPAL_SIGNATURE'] || 'AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy' %>
   # # With Certificate
   # cert_path: "config/cert_key.pem"
-  sandbox_email_address: Platform.sdk.seller@gmail.com
+  sandbox_email_address: <%= ENV['PAYPAL_SANDBOX_EMAIL'] || 'Platform.sdk.seller@gmail.com' %>
 
   # # IP Address
   # ip_address: 127.0.0.1
