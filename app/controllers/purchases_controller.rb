@@ -81,46 +81,30 @@ class PurchasesController < ApplicationController
   end
 
   def _make_paypal_payment(format)
-    @payment = PayPal::SDK::REST::Payment.new({
-      :intent =>  "sale",
+    paypal_url = "https://#{_paypal_domain}/cgi-bin/webscr"
 
-      :payer =>  {
-        :payment_method =>  "paypal"
-      },
+    payment_params = {
+      cmd: '_xclick',
+      business: @product.email,
+      item_name: @product.title,
+      amount: @product.price,
+      currency_code: 'USD',
+      button_subtype: 'services',
+      no_note: 1,
+      no_shipping: 1,
+      rm: 1,
+      return: product_purchase_url(@product, @purchase),
+      cancel_return: new_product_purchase_url(@product)
+      # notify_url: '' # TODO: URL to confirm purchase, i.e. IPN callback
+      # also used to notify buyer if they didn't didn't return to the site after
+      # purchase!!!
+    }
 
-      :redirect_urls => {
-        :return_url => product_purchase_url(@product, @purchase),
-        :cancel_url => new_product_purchase_url(@product)
-      },
+    format.html { redirect_to "#{paypal_url}?#{payment_params.to_query}" } # Url to complete payment
+  end
 
-      :transactions =>  [{
-        :item_list => {
-          :items => [{
-            :name => @product.title,
-            :price => sprintf("%.2f" % @product.price),
-            :currency => "USD",
-            :quantity => 1
-          }]
-        },
-
-        :amount =>  {
-          :total =>  sprintf("%.2f" % @product.price),
-          :currency =>  "USD"
-        }
-      }]
-    })
-
-    if @payment.create
-      @purchase.update_attribute :paypal_payment_id, @payment.id
-
-      # Redirect the user to given approval url
-      @redirect_url = @payment.links.find{|v| v.method == "REDIRECT" }.href
-      format.html { redirect_to @redirect_url } # Url to complete payment
-    else
-      # TODO: log errors, notify team and show something humman readable
-      # to the user ;)
-      raise @payment.error.inspect
-    end
+  def _paypal_domain
+    ENV['PAYPAL_DOMAIN'] || 'www.sandbox.paypal.com'
   end
 
   # PATCH/PUT /purchases/1

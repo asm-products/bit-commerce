@@ -39,7 +39,6 @@ gem 'neat'
 gem 'bitters'
 gem 'normalize-rails'
 gem 'paypal-sdk-adaptivepayments'
-gem 'paypal-sdk-rest'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
