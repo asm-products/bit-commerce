@@ -82,6 +82,7 @@ GEM
       multi_json (~> 1.0)
       xml-simple
     pg (0.18.1)
+    puma (2.16.0)
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -162,6 +163,7 @@ DEPENDENCIES
   jquery-rails
   paypal-sdk-adaptivepayments
   pg
+  puma
   rails (= 4.2.1)
   rails_12factor
   sass-rails (~> 5.0)
