@@ -12,25 +12,30 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :title, class: 'sr-only' %>
+    <%= f.text_field :title, placeholder: 'Product Title, e.g. SEO Secrets', class: 'form-control input-lg' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :email %>
     <%= f.text_field :email, placeholder: 'Your PayPal Email Address', class: 'form-control' %>
   </div>
 
-  <hr/>
-
   <div class="form-group">
-    <%= f.label :title %>
-    <%= f.text_field :title, placeholder: 'Product Title, e.g. SEO Secrets', class: 'form-control' %>
+    <div class="row">
+      <div class="col-xs-2">
+        <%= f.label :price %>
+        <%= f.text_field :price, placeholder: '1.99', class: 'form-control' %>
+      </div>
+    </div>
   </div>
-  <div class="form-group" style="min-height:100px;">
-    <strong>Files</strong>&nbsp;&nbsp;<span id="dropbox-chooser"></span>
+
+  <div class="form-group well" style="min-height:100px;">
+    <span id="dropbox-chooser"></span>
     <ul id="dropbox-files">
     </ul>
   </div>
-  <div class="form-group price">
-    <%= f.label :price %>
-    <%= f.text_field :price, class: 'form-control' %>
-  </div>
+
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>
