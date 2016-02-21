@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     resources :purchases, except: :edit
   end
 
-  root 'products#new'
+  root 'pages#show'
 end
